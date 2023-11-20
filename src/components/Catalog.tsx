@@ -1,26 +1,31 @@
 import React from "react";
 import Card from "./Card";
 import { ICard } from "../models/ICard";
+import { useNavigate } from "react-router-dom";
 
 const Catalog:React.FC = ()=>{
+  const navigate = useNavigate()
     const data: ICard[] = [
         {
           id:0,
           name:"Кошачий корм1",
           price:500,
-          image: "/picture/cat1.jpg"
+          image: "/picture/cat1.jpg",
+          weight:500
         },
         {
           id:1,
           name:"Кошачий корм2",
           price:600,
-          image: "/picture/cat2.jpg"
+          image: "/picture/cat2.jpg",
+          weight:700
         },
         {
             id:2,
             name:"Кошачий корм3",
             price:100,
-            image: "/picture/cat3.jpg"
+            image: "/picture/cat3.jpg",
+            weight:50
             },
             {
               id:3,
@@ -76,6 +81,7 @@ const Catalog:React.FC = ()=>{
     
      )}
      </div>
+     <button onClick={()=>navigate("/basket")}>Перейти в козину</button>
         </div>
     )
 }

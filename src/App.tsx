@@ -1,5 +1,5 @@
 import React from 'react';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css"
 
 
@@ -14,13 +14,16 @@ import {
 import ErrorURL from './components/ErrorURL';
 import Catalog from './components/Catalog';
 import DetailsCard from './components/DetailsCard';
-import Login from './components/Login';
+
+import Basket from './components/basket/Basket';
+import NavbarUser from './components/NavbarUser';
+import Login from './components/login/Login';
 
 
 const Layout = () => {
   return (
     <>
-    
+    <NavbarUser/>
       <Outlet/>
     
     </>
@@ -45,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: `/catalog/details/:id`,
         element: <DetailsCard />
+      },
+      {
+        path:"/basket",
+        element: <Basket/>
       }
       
       
@@ -54,7 +61,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login/>,
+    element:<Login/>
   },
   {
     path: "*",

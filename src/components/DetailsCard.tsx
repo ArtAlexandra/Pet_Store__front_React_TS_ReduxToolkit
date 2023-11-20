@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ICard } from '../models/ICard';
 import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 
-
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import Button from 'react-bootstrap/Button';
 
 const data: ICard[] = [
     {
@@ -74,15 +77,45 @@ const DetailsCard:React.FC = ()=>{
     let selectedCard = data.find((card)=>card.id===Number(id))
 
     const navigate = useNavigate()
+
+    const dispatch = useAppDispatch()
+    const {name} = useAppSelector(state=>state.cardReducer)
+    const Add = ()=>{
+      console.log(name)
+    }
+    const [quantity, setQuantity] = useState<number>(1)
+    const [amount, setAmount] = useState<number>(0)
+    useEffect(()=>{
+      const cost = quantity* Number(selectedCard?.price)
+      setAmount(cost)
+    }, [quantity])
     return(
         <div>
-            <button onClick={()=>navigate(-2)}>Назад</button>
+           
+            <Button variant="dark" size="sm" onClick={()=>navigate(-2)}>Назад</Button>
             <p>{selectedCard?.name}</p>
             <img src={selectedCard?.image} alt="card" width={200} height={250}/>
             <p>{selectedCard?.number}</p>
             <p>{selectedCard?.price}</p>
-            <p>{selectedCard?.description}</p>
-            <button>Купить</button>
+          
+          <button onClick={()=>setQuantity(quantity + 1)}>+</button>  <p>{quantity}</p><button onClick={()=>setQuantity(quantity - 1)}>-</button>
+           <p>{amount}</p>
+            <Button variant="success" onClick={Add}>Добавить в корзину</Button>
+            <Tabs
+      defaultActiveKey="home"
+      id="uncontrolled-tab-example"
+      className="mb-3"
+    >
+      <Tab eventKey="home" title="Описание">
+      <p>{selectedCard?.description}</p>
+      </Tab>
+      <Tab eventKey="profile" title="Состав">
+        <p>Какой-то большой состав</p>
+      </Tab>
+      <Tab eventKey="contact" title="Отзывы" disabled>
+        Tab content for Contact
+      </Tab>
+    </Tabs>
 
         </div>
     )

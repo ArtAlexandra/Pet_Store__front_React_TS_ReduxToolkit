@@ -5,4 +5,6 @@ export interface ICard{
     image?:string;
     description?:string;
     number?:number;
+    add?:boolean;
+    weight?:number;
 }
