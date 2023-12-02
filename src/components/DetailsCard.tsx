@@ -6,7 +6,9 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
-
+import { fetchCards } from "../store/reducers/ActionCreators";
+import { addGoods } from "../store/reducers/BasketSlice";
+/*
 const data: ICard[] = [
     {
       id:0,
@@ -72,16 +74,29 @@ const data: ICard[] = [
                       },
 
   ]
+  */
 const DetailsCard:React.FC = ()=>{
+
+  
     const {id} = useParams()
-    let selectedCard = data.find((card)=>card.id===Number(id))
+
+    
 
     const navigate = useNavigate()
 
     const dispatch = useAppDispatch()
-    const {name} = useAppSelector(state=>state.cardReducer)
+    const {cards, isLoading,error} = useAppSelector(state=>state.cardReducer);
+   
+    const selectedCard = cards.find((card)=>card.id_g===Number(id));
+
+    useEffect(()=>{
+        dispatch(fetchCards())
+    }, [])
     const Add = ()=>{
-      console.log(name)
+      console.log("tyt")
+      if(selectedCard){
+      dispatch(addGoods(selectedCard))
+      }
     }
     const [quantity, setQuantity] = useState<number>(1)
     const [amount, setAmount] = useState<number>(0)
@@ -92,10 +107,12 @@ const DetailsCard:React.FC = ()=>{
     return(
         <div>
            
-            <Button variant="dark" size="sm" onClick={()=>navigate(-2)}>Назад</Button>
-            <p>{selectedCard?.name}</p>
-            <img src={selectedCard?.image} alt="card" width={200} height={250}/>
-            <p>{selectedCard?.number}</p>
+           
+            <button onClick={()=>navigate("/catalog")}>Назад</button>
+            <p>{selectedCard?.title}</p>
+            {/*selectedCard?.image&&  <img src={"data:image/jpeg;"+URL.createObjectURL(selectedCard?.image)} alt="card" width={200} height={250}/>*/}
+           
+            <p>{selectedCard?.mark}</p>
             <p>{selectedCard?.price}</p>
           
           <button onClick={()=>setQuantity(quantity + 1)}>+</button>  <p>{quantity}</p><button onClick={()=>setQuantity(quantity - 1)}>-</button>

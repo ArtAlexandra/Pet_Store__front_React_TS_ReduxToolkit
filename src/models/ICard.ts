@@ -1,10 +1,19 @@
+import { IAnimal } from "./IAnimal";
+import { IKind } from "./IKind";
+
 export interface ICard{
-    id:number;
-    name:string;
+    id_g:number;
+    title:string;
     price:number;
-    image?:string;
-    description?:string;
-    number?:number;
-    add?:boolean;
-    weight?:number;
+    animalId:number;
+    animal: IAnimal;
+    quantity:number;
+    description:string;
+    mark:string;
+    kindId:number;
+    kind: IKind;
+    image:String;
+    imageString:string;
 }
+
+

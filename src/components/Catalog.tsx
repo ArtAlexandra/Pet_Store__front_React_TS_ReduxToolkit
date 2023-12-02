@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "./Card";
 import { ICard } from "../models/ICard";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { fetchCards } from "../store/reducers/ActionCreators";
 
 const Catalog:React.FC = ()=>{
   const navigate = useNavigate()
+  /*
     const data: ICard[] = [
         {
           id:0,
@@ -70,14 +73,19 @@ const Catalog:React.FC = ()=>{
                           image: "/picture/dog5.jpg"
                           },
     
-      ]
-      
+      ]*/
+      const dispatch = useAppDispatch()
+      const {cards, isLoading, error} = useAppSelector(state=>state.cardReducer);
+      useEffect(()=>{
+        dispatch(fetchCards())
+      },[])
+      console.log(cards)
     return(
         <div>
  <div className='container_cards'>
-     {data.map((d)=>
+     {cards.map((d)=>
     
-      <Card key={d.id} card={d}/>
+      <Card key={d.id_g} card={d}/>
     
      )}
      </div>
